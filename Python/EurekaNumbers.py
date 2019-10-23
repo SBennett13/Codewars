@@ -1,7 +1,8 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
 """
-Problem: Take a Number And Sum Its Digits Raised To The Consecutive Powers And ....¡Eureka!!
+Scott Bennett, scottbennett027@gmail.com
+
+Problem: Take a Number And Sum Its Digits Raised To The Consecutive Powers And ....Eureka!!
 
 The number 89 is the first integer with more than one digit that fulfills the property partially introduced in the title of this kata. What's the use of saying "Eureka"? Because this sum gives the same number.
 
@@ -26,7 +27,7 @@ Enjoy it!!
 Link: www.codewars.com/kata/take-a-number-and-sum-its-digits-raised-to-the-consecutive-powers-and-dot-dot-dot-eureka
 """
 
-import test
+import unittest
 
 def sum_dig_pow(a, b):
 
@@ -41,7 +42,7 @@ def sum_dig_pow(a, b):
         else:
             strRep = str(i)
             sum = 0
-            
+
             # For each digit, raise to index power and add to a sum
             for j in range(1, len(strRep)+1):
                sum += pow(int(strRep[j-1]), j)
@@ -49,10 +50,15 @@ def sum_dig_pow(a, b):
                 results.append(i)
     return results
 
-test.describe("Example Tests")
-test.assert_equals(sum_dig_pow(1, 10), [1, 2, 3, 4, 5, 6, 7, 8, 9])
-test.assert_equals(sum_dig_pow(1, 100), [1, 2, 3, 4, 5, 6, 7, 8, 9, 89])
-test.assert_equals(sum_dig_pow(10, 89),  [89])
-test.assert_equals(sum_dig_pow(10, 100),  [89])
-test.assert_equals(sum_dig_pow(90, 100), [])
-test.assert_equals(sum_dig_pow(89, 135), [89, 135])
+class UnitTests(unittest.TestCase):
+    
+    def test_kata(self):
+        self.assertEqual(sum_dig_pow(1, 10), [1, 2, 3, 4, 5, 6, 7, 8, 9])
+        self.assertEqual(sum_dig_pow(1, 100), [1, 2, 3, 4, 5, 6, 7, 8, 9, 89])
+        self.assertEqual(sum_dig_pow(10, 89),  [89])
+        self.assertEqual(sum_dig_pow(10, 100),  [89])
+        self.assertEqual(sum_dig_pow(90, 100), [])
+        self.assertEqual(sum_dig_pow(89, 135), [89, 135])
+
+if __name__ == '__main__':
+    unittest.main()

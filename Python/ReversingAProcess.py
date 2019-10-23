@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Scott Bennett, scottbennett027@gmail.com
 
@@ -35,6 +36,8 @@ decode("5057aan") -> "Impossible to decode"
 Link: https://www.codewars.com/kata/reversing-a-process
 """
 
+import unittest
+
 def decode(r):
     
     # Grab the numbers of the front, in order; then make a list of the letters
@@ -46,6 +49,7 @@ def decode(r):
     # Make a map (dict) to store the encoded:plaintext key:value pairs
     for i in range(ord('a')-97, ord('z')-96):
         encodeVal = chr((i*num%26)+97)
+        
         # If you encounter a non-empty key, then the mapping is impossible to
         # decode due to repeats
         if d.get(encodeVal) is None:
@@ -59,17 +63,13 @@ def decode(r):
                                                                                                                 
     return result
 
+class UnitTests(unittest.TestCase):
 
-@test.describe('Tests')
-     
-def fixed_tests():
-    def testing_decode(s, exp):
-        actual = decode(s)
-        Test.assert_equals(actual, exp)
-        
-    @test.it('Basic Tests')
-    def basic_tests1():
-        testing_decode("1273409kuqhkoynvvknsdwljantzkpnmfgf", "uogbucwnddunktsjfanzlurnyxmx")
-        testing_decode("761328qockcouoqmoayqwmkkic", "Impossible to decode")
-        testing_decode("1544749cdcizljymhdmvvypyjamowl", "mfmwhbpoudfujjozopaugcb")
-        testing_decode("1122305vvkhrrcsyfkvejxjfvafzwpsdqgp", "rrsxppowmjsrclfljrajtybwviqb")
+    def test_kata(self):         
+        self.assertEqual(decode("1273409kuqhkoynvvknsdwljantzkpnmfgf"), "uogbucwnddunktsjfanzlurnyxmx")
+        self.assertEqual(decode("761328qockcouoqmoayqwmkkic"), "Impossible to decode")
+        self.assertEqual(decode("1544749cdcizljymhdmvvypyjamowl"), "mfmwhbpoudfujjozopaugcb")
+        self.assertEqual(decode("1122305vvkhrrcsyfkvejxjfvafzwpsdqgp"), "rrsxppowmjsrclfljrajtybwviqb")
+
+if __name__ == '__main__':
+    unittest.main()
