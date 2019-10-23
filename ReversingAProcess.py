@@ -35,34 +35,30 @@ decode("5057aan") -> "Impossible to decode"
 Link: https://www.codewars.com/kata/reversing-a-process
 """
 
-def checkEncoding(num):
-    d = dict()
-    for i in range(ord('a')-97, ord('z')-96):
-        encodeVal = str(i*num%26)
-        if d.get(encodeVal) is None:
-            d[encodeVal] = 1
-        else:
-            return False
-    return True
-        
-
 def decode(r):
-
-    num = [x for x in r if ord(x) < ord('A')]
-    num = int("".join(num))
+    
+    # Grab the numbers of the front, in order; then make a list of the letters
+    num = int("".join([x for x in r if ord(x) < ord('A')]))
     letters = [x for x in r if ord(x) >= ord('a')]
     result = ""
-    if checkEncoding(num) is False:
-        return "Impossible to decode"
-    
+    d = dict()
+                            
+    # Make a map (dict) to store the encoded:plaintext key:value pairs
+    for i in range(ord('a')-97, ord('z')-96):
+        encodeVal = chr((i*num%26)+97)
+        # If you encounter a non-empty key, then the mapping is impossible to
+        # decode due to repeats
+        if d.get(encodeVal) is None:
+            d[encodeVal] = chr(i+97)
+        else:
+            return "Impossible to decode"
+                                                                                                
+    # Convert and Append
     for letter in letters:
-        currVal = ord(letter)-ord('a')
-        for i in range(ord('a')-97, ord('z')-96):
-            eval = i*num%26
-            if (currVal == eval):
-                result += chr(i+97)
-                break
+        result += d[letter]
+                                                                                                                
     return result
+
 
 @test.describe('Tests')
      
